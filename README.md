@@ -1,2 +1,2 @@
 # jquery
-programación jQuery
+Scripts  jQuery
