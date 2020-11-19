@@ -1,0 +1,42 @@
+  
+  let datos = new FormData();
+  let id = $(x).closest('tr').find("td[id='id']").text(); // buscamos el id en la grilla
+  
+  datos.append("id", id);
+  $.ajax({
+        url: url,
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(respuesta) {
+            let oRta = JSON.parse(respuesta); // parseamos
+            if (oRta.success == true) {
+                //codigo
+            }            
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            mostrarError(jqXHR, textStatus, errorThrown); // manejamos el error
+        }
+    });
+}
+function mostrarError(jqXHR, textStatus, errorThrown) {
+    let error = '';
+    if (jqXHR.status === 0) {
+        error = 'Not connect: Verify Network.';
+    } else if (jqXHR.status == 404) {
+        error = 'Requested page not found [404]';
+    } else if (jqXHR.status == 500) {
+        error = 'Internal Server Error [500].';
+    } else if (textStatus === 'parsererror') {
+        error = 'Requested JSON parse failed.';
+    } else if (textStatus === 'timeout') {
+        error = 'Time out error.';
+    } else if (textStatus === 'abort') {
+        error = 'Ajax request aborted.';
+    } else {
+        error = 'Uncaught Error: ' + jqXHR.responseText;
+    }
+    console.log(error);
+}
